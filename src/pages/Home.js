@@ -2,6 +2,10 @@ import React from 'react'
 
 export default function Home() {
   return (
-    <div>Home</div>
+    <ul>  
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+    </ul>
   )
 }

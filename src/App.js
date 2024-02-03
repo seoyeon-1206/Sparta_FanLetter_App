@@ -1,4 +1,4 @@
-import './App.css';
+import GlobalStyle from './style/reset';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Detail from './pages/Detail';
 import Home from './pages/Home';
@@ -6,6 +6,8 @@ import Error from './pages/Error';
 
 function App() {
   return (
+    <>
+    <GlobalStyle />
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
@@ -13,6 +15,7 @@ function App() {
       <Route path="*" element={<Error />} />
     </Routes>
     </BrowserRouter>
+    </>
   );
 }
 
