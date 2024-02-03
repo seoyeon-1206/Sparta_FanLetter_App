@@ -37,13 +37,18 @@ function App() {
     setFanLetters([...fanLetters, item])
   }
 
+  const handleDeleteLetter = deletedItem => {
+    const newLetters = fanLetters.filter(item => item.id != deletedItem.id)
+    setFanLetters(newLetters)
+  }
+
   return (
     <>
     <GlobalStyle />
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddNewLetter}/>} />
-      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters}/>}/>
+      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} handleDeleteLetter={handleDeleteLetter}/>}/>
       <Route path="*" element={<Error />} />
     </Routes>
     </BrowserRouter>
