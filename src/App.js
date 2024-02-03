@@ -4,21 +4,25 @@ import Detail from './pages/Detail';
 import Home from './pages/Home';
 import Error from './pages/Error';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 const dummyFanLetters = [
   {
+    id: uuidv4(),
     nickName: "joy💓",
     description: "Poyami love you",
     date: Date(),
     category: "Poyami"
   },
   {
+    id: uuidv4(),
     nickName: "joy💓",
     description: "Apple love you",
     date: Date(),
     category: "Apple"
   },
   {
+    id: uuidv4(),
     nickName: "joy💓",
     description: "Yeoul love you",
     date: Date(),
@@ -39,7 +43,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddNewLetter}/>} />
-      <Route path="/detail/:cardId" element={<Detail/>}/>
+      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters}/>}/>
       <Route path="*" element={<Error />} />
     </Routes>
     </BrowserRouter>

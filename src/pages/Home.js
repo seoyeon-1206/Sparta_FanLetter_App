@@ -1,7 +1,9 @@
 import React from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react'
+import { Link } from 'react-router-dom';
 
-export default function Home({fanLetters, handleAddNewLetter}) {
+export default function Home({ fanLetters, handleAddNewLetter }) {
   const [currentCategory, setCurrentCategory] = useState("Poyami")
   const [nickName, setNickName] = useState("")
   const [description, setDescription] = useState("")
@@ -9,6 +11,7 @@ export default function Home({fanLetters, handleAddNewLetter}) {
 
   const onAddNewLetter = () => {
     handleAddNewLetter({
+      id: uuidv4(),
       nickName: nickName,
       description: description,
       date: Date(),
@@ -19,15 +22,15 @@ export default function Home({fanLetters, handleAddNewLetter}) {
   const handleChangeCategory = newCategory => {
     setCurrentCategory(newCategory)
   }
-  
-  const categoryOptions =[
-    {key:1, value:"Poyami"},
-    {key:2, value:"Apple"},
-    {key:3, value:"Yeoul"}
+
+  const categoryOptions = [
+    { key: 1, value: "Poyami" },
+    { key: 2, value: "Apple" },
+    { key: 3, value: "Yeoul" }
   ]
 
   return (
-    <div> 
+    <div>
       <ul>
         <li>
           <button onClick={() => handleChangeCategory("Poyami")}>Poyami</button>
@@ -47,26 +50,28 @@ export default function Home({fanLetters, handleAddNewLetter}) {
         <section>
           <label>누구에게 보내실 건가요?: &nbsp;</label>
           <select onChange={e => setNewCategory(e.currentTarget.value)} value={newCategory}>
-          {categoryOptions.map((item, index)=>(
-            <option key={item.key} value={item.value}>{item.value}</option>
-          ))}
+            {categoryOptions.map((item, index) => (
+              <option key={item.key} value={item.value}>{item.value}</option>
+            ))}
           </select>
         </section>
         <div>
-          <button type="button" onClick={()=>onAddNewLetter()}>팬레터 등록</button>
+          <button type="button" onClick={() => onAddNewLetter()}>팬레터 등록</button>
         </div>
       </form>
       <ul>
-      {
-        fanLetters.filter(item => item.category === currentCategory).map(item => {
-          return <li>
-            <h3>{item.nickName}</h3>
-            <p>{item.date}</p>
-            <h3>{item.description}</h3>
-          </li>
-        })
-      }
-     </ul>
+        {
+          fanLetters.filter(item => item.category === currentCategory).map(item => {
+            return <Link to={`/detail/${item.id}`}>
+              <li>
+                <h3>{item.nickName}</h3>
+                <p>{item.date}</p>
+                <h3>{item.description}</h3>
+              </li>
+            </Link>
+          })
+        }
+      </ul>
     </div>
   )
 }
