@@ -33,7 +33,8 @@ const dummyFanLetters = [
 function App() {
   const [fanLetters, setFanLetters] = useState(dummyFanLetters)
 
-  const handleAddNewLetter = item => {
+  const handleAddOrUpdateNewLetter = item => {
+    console.log(item)
     setFanLetters([...fanLetters, item])
   }
 
@@ -47,8 +48,8 @@ function App() {
     <GlobalStyle />
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddNewLetter}/>} />
-      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} handleDeleteLetter={handleDeleteLetter}/>}/>
+      <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddOrUpdateNewLetter}/>} />
+      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} handleDeleteLetter={handleDeleteLetter} handleUpdateLetters={handleAddOrUpdateNewLetter}/>}/>
       <Route path="*" element={<Error />} />
     </Routes>
     </BrowserRouter>
