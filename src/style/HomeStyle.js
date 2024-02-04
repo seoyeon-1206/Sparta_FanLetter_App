@@ -6,7 +6,7 @@ export const CustomHeader = styled.header`
   justify-content: center;
   width: 100%;
   height: 200px;
-  background-image: url(./images/cover.png);
+  background-image: url(/images/cover.png);
   background-repeat: no-repeat;
   background-size: cover;
 `
@@ -77,7 +77,7 @@ export const ProfileImage = styled.div`
   width: 100px;
   height: 100px;
   margin-right: 20px;
-  background-image: url(./images/profile.png);
+  background-image: url(/images/profile.png);
   background-repeat: no-repeat;
   background-size: cover;
 `

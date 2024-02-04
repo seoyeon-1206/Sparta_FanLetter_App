@@ -20,7 +20,7 @@ export default function Detail({ fanLetters, handleDeleteLetter, handleUpdateLet
       id: letter.id,
       nickName: letter.nickName,
       description: editedDescription,
-      date: letter.date,
+      date: letter.date, 
       category: letter.category
     })
     setIsEdit(false)
