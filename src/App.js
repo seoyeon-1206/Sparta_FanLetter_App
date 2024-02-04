@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Error from './pages/Error';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
+import { FanLetterContext } from './context/FanLetterContext';
 
 const dummyFanLetters = [
   {
@@ -55,14 +55,16 @@ function App() {
 
   return (
     <>
-    <GlobalStyle />
-    <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddNewLetter}/>} />
-      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} handleDeleteLetter={handleDeleteLetter} handleUpdateLetters={handleUpdateLetter}/>}/>
-      <Route path="*" element={<Error />} />
-    </Routes>
-    </BrowserRouter>
+    <FanLetterContext.Provider value={{fanLetters, handleAddNewLetter, handleDeleteLetter, handleUpdateLetter}}> 
+      <GlobalStyle />
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/detail/:id" element={<Detail/>}/>
+        <Route path="*" element={<Error />} />
+      </Routes>
+      </BrowserRouter>
+    </FanLetterContext.Provider>
     </>
   );
 }
