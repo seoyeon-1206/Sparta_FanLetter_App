@@ -5,6 +5,17 @@ import Home from './pages/Home';
 import Error from './pages/Error';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
+
+const customHeader = styled.header`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 20px;
+  background-image: url(https://store.nintendo.co.kr/media/catalog/product/cache/8e3c84988db1fdb90470f4d01453d879/f/1/f1715bebde9ecc2e1cecc33e35166cbf87233ae35cc4dd6649645acc3a036696.jpg);
+`
 
 const dummyFanLetters = [
   {

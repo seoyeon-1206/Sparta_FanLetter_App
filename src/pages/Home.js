@@ -1,13 +1,15 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ButtonItem, ButtonList, CustomHeader, FanLetterItem, FanLetterList, FormStyle, FormSubmitButton, FormSubmitButtonBox, NickNameDate, NickNameDescription, NickNameText, ProfileImage, SectionStyle } from '../style/HomeStyle';
 
 export default function Home({ fanLetters, handleAddNewLetter }) {
   const [currentCategory, setCurrentCategory] = useState("Poyami")
   const [nickName, setNickName] = useState("")
   const [description, setDescription] = useState("")
   const [newCategory, setNewCategory] = useState("Poyami")
+  const navigate = useNavigate()
 
   const onAddNewLetter = () => {
     handleAddNewLetter({
@@ -30,48 +32,50 @@ export default function Home({ fanLetters, handleAddNewLetter }) {
   ]
 
   return (
+    <>
+    <CustomHeader/>
     <div>
-      <ul>
-        <li>
-          <button onClick={() => handleChangeCategory("Poyami")}>Poyami</button>
-          <button onClick={() => handleChangeCategory("Apple")}>Apple</button>
-          <button onClick={() => handleChangeCategory("Yeoul")}>Yeoul</button>
-        </li>
-      </ul>
-      <form>
-        <section>
+      <ButtonList>
+        <ButtonItem color={`${currentCategory === "Poyami" ? "yellow" : "gray"}`} onClick={() => handleChangeCategory("Poyami")}>Poyami</ButtonItem>
+        <ButtonItem color={`${currentCategory === "Apple" ? "yellow" : "gray"}`} onClick={() => handleChangeCategory("Apple")}>Apple</ButtonItem>
+        <ButtonItem color={`${currentCategory === "Yeoul" ? "yellow" : "gray"}`} onClick={() => handleChangeCategory("Yeoul")}>Yeoul</ButtonItem>
+      </ButtonList>
+      <FormStyle>
+        <SectionStyle>
           <label>닉네임: &nbsp;</label>
           <input onChange={e => setNickName(e.currentTarget.value)} placeholder="최대 20글자까지 작성할 수 있습니다." maxlength="20" value={nickName}></input>
-        </section>
-        <section>
+        </SectionStyle>
+        <SectionStyle>
           <label>내용:&nbsp;</label>
-          <input onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={description}></input>
-        </section>
-        <section>
+          <textarea onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={description}></textarea>
+        </SectionStyle>
+        <SectionStyle>
           <label>누구에게 보내실 건가요?: &nbsp;</label>
           <select onChange={e => setNewCategory(e.currentTarget.value)} value={newCategory}>
             {categoryOptions.map((item, index) => (
               <option key={item.key} value={item.value}>{item.value}</option>
             ))}
           </select>
-        </section>
-        <div>
+        </SectionStyle>
+        <FormSubmitButtonBox>
           <button type="button" onClick={() => onAddNewLetter()}>팬레터 등록</button>
-        </div>
-      </form>
-      <ul>
+        </FormSubmitButtonBox>
+      </FormStyle>
+      <FanLetterList>
         {
           fanLetters.filter(item => item.category === currentCategory).map(item => {
-            return <Link to={`/detail/${item.id}`}>
-              <li>
-                <h3>{item.nickName}</h3>
-                <p>{item.date}</p>
-                <h3>{item.description}</h3>
-              </li>
-            </Link>
+            return <FanLetterItem onClick={() => navigate(`/detail/${item.id}`)}>
+                <ProfileImage src='./images/profile.png'/>
+                <div> 
+                  <NickNameText>{item.nickName}</NickNameText>
+                  <NickNameDate>{item.date}</NickNameDate>
+                  <NickNameDescription>{item.description}</NickNameDescription>
+                </div>
+              </FanLetterItem>
           })
         }
-      </ul>
+      </FanLetterList>
     </div>
+    </>
   )
 }
