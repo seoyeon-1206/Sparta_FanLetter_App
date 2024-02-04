@@ -65,7 +65,7 @@ export default function Home({ fanLetters, handleAddNewLetter }) {
         {
           fanLetters.filter(item => item.category === currentCategory).map(item => {
             return <FanLetterItem onClick={() => navigate(`/detail/${item.id}`)}>
-                <ProfileImage src='./images/profile.png'/>
+                <ProfileImage/>
                 <div> 
                   <NickNameText>{item.nickName}</NickNameText>
                   <NickNameDate>{item.date}</NickNameDate>

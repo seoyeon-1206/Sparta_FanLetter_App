@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { FanLetterItem, NickNameDate, NickNameDescription, NickNameText, ProfileImage } from '../style/HomeStyle';
+import { BottomButtonStyle, EditButtons, FanLetterDetail } from '../style/DetailStyle';
 
-export default function Detail({ fanLetters, handleDeleteLetter,handleUpdateLetters }) {
+export default function Detail({ fanLetters, handleDeleteLetter, handleUpdateLetters }) {
   const [isEdit, setIsEdit] = useState(false)
   const [editedDescription, setEditedDescription] = useState("")
   let navigate = useNavigate();
@@ -9,11 +11,13 @@ export default function Detail({ fanLetters, handleDeleteLetter,handleUpdateLett
   const letter = fanLetters.find((item) => item.id === param.id);
 
   const handleDelete = () => {
-    handleDeleteLetter(letter)
+    handleDeleteLetter(letter.id)
+    navigate('/')
   }
 
   const handleEditFinished = () => {
     handleUpdateLetters({
+      id: letter.id,
       nickName: letter.nickName,
       description: editedDescription,
       date: letter.date,
@@ -29,31 +33,37 @@ export default function Detail({ fanLetters, handleDeleteLetter,handleUpdateLett
         {
           isEdit ?
             <>
-              <div>
-                <h1>{letter.nickName}</h1>
-                <div>{letter.date}</div>
-                <h3>{letter.category}에게</h3>
-                <input onChange={e => setEditedDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={editedDescription}></input>
-              </div>
-              <div>
-                <button onClick={() => handleEditFinished()}>수정완료</button>
-              </div>
+              <FanLetterDetail>
+                <ProfileImage/>
+                <div>
+                  <NickNameText>{letter.nickName}</NickNameText>
+                  <NickNameDate>{letter.date}</NickNameDate>
+                  <h3>{letter.category}에게</h3>
+                  <textarea onChange={e => setEditedDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={editedDescription}></textarea>
+                  <EditButtons>
+                    <BottomButtonStyle onClick={() => handleEditFinished()}>수정완료</BottomButtonStyle>
+                  </EditButtons>
+                </div>
+              </FanLetterDetail>
             </>
             :
             <>
-              <div>
-                <h1>{letter.nickName}</h1>
-                <div>{letter.date}</div>
-                <h3>{letter.category}에게</h3>
-                <p>{letter.description}</p>
-              </div>
-              <div>
-                <button onClick={() => handleDelete()}>삭제</button>
-                <button onClick={() => {
-                  setEditedDescription(letter.description)
-                  setIsEdit(true)
-                }}>수정</button>
-              </div>
+              <FanLetterDetail>
+                <ProfileImage />
+                <div>
+                  <NickNameText>{letter.nickName}</NickNameText>
+                  <NickNameDate>{letter.date}</NickNameDate>
+                  <h3>{letter.category}에게</h3>
+                  <NickNameDescription>{letter.description}</NickNameDescription>
+                  <EditButtons>
+                    <BottomButtonStyle onClick={() => handleDelete()}>삭제</BottomButtonStyle>
+                    <BottomButtonStyle onClick={() => {
+                      setEditedDescription(letter.description)
+                      setIsEdit(true)
+                    }}>수정</BottomButtonStyle>
+                  </EditButtons>
+                </div>
+              </FanLetterDetail>
             </>
         }
       </div>

@@ -7,16 +7,6 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
-const customHeader = styled.header`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 300px;
-  margin-bottom: 20px;
-  background-image: url(https://store.nintendo.co.kr/media/catalog/product/cache/8e3c84988db1fdb90470f4d01453d879/f/1/f1715bebde9ecc2e1cecc33e35166cbf87233ae35cc4dd6649645acc3a036696.jpg);
-`
-
 const dummyFanLetters = [
   {
     id: uuidv4(),
@@ -44,13 +34,22 @@ const dummyFanLetters = [
 function App() {
   const [fanLetters, setFanLetters] = useState(dummyFanLetters)
 
-  const handleAddOrUpdateNewLetter = item => {
-    console.log(item)
+  const handleAddNewLetter = item => {
     setFanLetters([...fanLetters, item])
   }
+  const handleUpdateLetter = updatedItem => {
+    const newLetterList =  fanLetters.map(item => {
+      if (item.id == updatedItem.id) {
+        return updatedItem
+      } else {
+        return item
+      }
+    })
+    setFanLetters(newLetterList)
+  }
 
-  const handleDeleteLetter = deletedItem => {
-    const newLetters = fanLetters.filter(item => item.id != deletedItem.id)
+  const handleDeleteLetter = deletedId => {
+    const newLetters = fanLetters.filter(item => item.id != deletedId)
     setFanLetters(newLetters)
   }
 
@@ -59,8 +58,8 @@ function App() {
     <GlobalStyle />
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddOrUpdateNewLetter}/>} />
-      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} handleDeleteLetter={handleDeleteLetter} handleUpdateLetters={handleAddOrUpdateNewLetter}/>}/>
+      <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddNewLetter}/>} />
+      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} handleDeleteLetter={handleDeleteLetter} handleUpdateLetters={handleUpdateLetter}/>}/>
       <Route path="*" element={<Error />} />
     </Routes>
     </BrowserRouter>
