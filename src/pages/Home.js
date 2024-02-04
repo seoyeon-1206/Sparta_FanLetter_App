@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { ButtonItem, ButtonList, CustomHeader, FanLetterItem, FanLetterList, FormStyle, FormSubmitButton, FormSubmitButtonBox, NickNameDate, NickNameDescription, NickNameText, ProfileImage, SectionStyle } from '../style/HomeStyle';
+import { useNavigate } from 'react-router-dom';
+import { ButtonItem, ButtonList, CustomHeader, FanLetterItem, FanLetterList, FormStyle, FormSubmitButtonBox, NickNameDate, NickNameDescription, NickNameText, ProfileImage, SectionStyle } from '../style/HomeStyle';
 import { FanLetterContext } from '../context/FanLetterContext';
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
   const [nickName, setNickName] = useState("")
   const [description, setDescription] = useState("")
   const [newCategory, setNewCategory] = useState("Poyami")
-  const { fanLetters, handleAddNewLetter, handleDeleteLetter, handleUpdateLetter } = useContext(FanLetterContext);
+  const { fanLetters, handleAddNewLetter} = useContext(FanLetterContext);
   const navigate = useNavigate()
 
   const onAddNewLetter = () => {

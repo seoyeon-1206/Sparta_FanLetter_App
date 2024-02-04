@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { FanLetterItem, NickNameDate, NickNameDescription, NickNameText, ProfileImage } from '../style/HomeStyle';
+import { useNavigate, useParams } from 'react-router-dom';
+import { NickNameDate, NickNameDescription, NickNameText, ProfileImage } from '../style/HomeStyle';
 import { BottomButtonStyle, EditButtons, FanLetterDetail } from '../style/DetailStyle';
 import { FanLetterContext } from '../context/FanLetterContext';
 
 export default function Detail() {
   const [isEdit, setIsEdit] = useState(false)
   const [editedDescription, setEditedDescription] = useState("")
-  const { fanLetters, handleAddNewLetter, handleDeleteLetter, handleUpdateLetter } = useContext(FanLetterContext);
+  const { fanLetters, handleDeleteLetter, handleUpdateLetter } = useContext(FanLetterContext);
+
   let navigate = useNavigate();
   const param = useParams();
   const letter = fanLetters.find((item) => item.id === param.id);
