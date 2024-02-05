@@ -43,12 +43,36 @@ export const FormStyle = styled.form`
 `
 
 export const SectionStyle = styled.section`
+  display: felx;
+  flex-direction: row;
   padding: 20px;
+  font-size: 22px;
+`
+
+export const NickNameInput = styled.input`
+ width: 100%;
+`
+
+export const DesciptionTextArea = styled.textarea`
+  width: 100%;
+  height: 100px;
 `
 
 export const FormSubmitButtonBox = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-right: 20px;
+`
+
+export const FormSubmitButton = styled.button`
+  border: 2px solid black;
+  background: white ; 
+  box-shadow:none; 
+  border-radius:0; 
+  padding:5px; 
+  overflow:visible; 
+  cursor:pointer;
+  font-size: 16px;
 `
 
 export const FanLetterList = styled.ul`

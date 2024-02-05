@@ -2,7 +2,7 @@ import React from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { ButtonItem, ButtonList, CustomHeader, FanLetterItem, FanLetterList, FormStyle, FormSubmitButton, FormSubmitButtonBox, NickNameDate, NickNameDescription, NickNameText, ProfileImage, SectionStyle } from '../style/HomeStyle';
+import { ButtonItem, ButtonList, CustomHeader, DesciptionTextArea, FanLetterItem, FanLetterList, FormStyle, FormSubmitButton, FormSubmitButtonBox, NickNameDate, NickNameDescription, NickNameInput, NickNameText, ProfileImage, SectionStyle } from '../style/HomeStyle';
 
 export default function Home({ fanLetters, handleAddNewLetter }) {
   const [currentCategory, setCurrentCategory] = useState("Poyami")
@@ -57,11 +57,11 @@ export default function Home({ fanLetters, handleAddNewLetter }) {
       <FormStyle>
         <SectionStyle>
           <label>닉네임: &nbsp;</label>
-          <input onChange={e => setNickName(e.currentTarget.value)} placeholder="최대 20글자까지 작성할 수 있습니다." maxLength="20" value={nickName}></input>
+          <NickNameInput onChange={e => setNickName(e.currentTarget.value)} placeholder="최대 20글자까지 작성할 수 있습니다." maxLength="20" value={nickName}></NickNameInput>
         </SectionStyle>
         <SectionStyle>
           <label>내용:&nbsp;</label>
-          <textarea onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxLength="20" value={description}></textarea>
+          <DesciptionTextArea onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxLength="20" value={description}></DesciptionTextArea>
         </SectionStyle>
         <SectionStyle>
           <label>누구에게 보내실 건가요?: &nbsp;</label>
@@ -72,7 +72,7 @@ export default function Home({ fanLetters, handleAddNewLetter }) {
           </select>
         </SectionStyle>
         <FormSubmitButtonBox>
-          <button type="button" onClick={() => onAddNewLetter()}>팬레터 등록</button>
+          <FormSubmitButton type="button" onClick={() => onAddNewLetter()}>팬레터 등록</FormSubmitButton>
         </FormSubmitButtonBox>
       </FormStyle>
       <FanLetterList>
