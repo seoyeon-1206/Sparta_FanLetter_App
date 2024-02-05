@@ -16,10 +16,24 @@ export default function Home({ fanLetters, handleAddNewLetter }) {
       id: uuidv4(),
       nickName: nickName,
       description: description,
-      date: Date(),
+      date: formatDate(new Date()),
       category: newCategory
     })
   }
+
+  const formatDate = (date) => {
+    const year = date.getFullYear().toString().slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const seconds = ('0' + date.getSeconds()).slice(-2);
+
+    const period = hours < 12 ? '오전' : '오후';
+    const formattedHours = hours % 12 || 12;
+
+    return `${year}. ${month}. ${day}. ${period} ${formattedHours}:${minutes}:${seconds}`;
+  };
 
   const handleChangeCategory = newCategory => {
     setCurrentCategory(newCategory)
@@ -36,18 +50,18 @@ export default function Home({ fanLetters, handleAddNewLetter }) {
     <CustomHeader/>
     <div>
       <ButtonList>
-        <ButtonItem color={`${currentCategory === "Poyami" ? "yellow" : "gray"}`} onClick={() => handleChangeCategory("Poyami")}>Poyami</ButtonItem>
-        <ButtonItem color={`${currentCategory === "Apple" ? "yellow" : "gray"}`} onClick={() => handleChangeCategory("Apple")}>Apple</ButtonItem>
-        <ButtonItem color={`${currentCategory === "Yeoul" ? "yellow" : "gray"}`} onClick={() => handleChangeCategory("Yeoul")}>Yeoul</ButtonItem>
+        <ButtonItem color={`${currentCategory === "Poyami" ? "antiquewhite" : "gray"}`} onClick={() => handleChangeCategory("Poyami")}>Poyami</ButtonItem>
+        <ButtonItem color={`${currentCategory === "Apple" ? "antiquewhite" : "gray"}`} onClick={() => handleChangeCategory("Apple")}>Apple</ButtonItem>
+        <ButtonItem color={`${currentCategory === "Yeoul" ? "antiquewhite" : "gray"}`} onClick={() => handleChangeCategory("Yeoul")}>Yeoul</ButtonItem>
       </ButtonList>
       <FormStyle>
         <SectionStyle>
           <label>닉네임: &nbsp;</label>
-          <input onChange={e => setNickName(e.currentTarget.value)} placeholder="최대 20글자까지 작성할 수 있습니다." maxlength="20" value={nickName}></input>
+          <input onChange={e => setNickName(e.currentTarget.value)} placeholder="최대 20글자까지 작성할 수 있습니다." maxLength="20" value={nickName}></input>
         </SectionStyle>
         <SectionStyle>
           <label>내용:&nbsp;</label>
-          <textarea onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={description}></textarea>
+          <textarea onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxLength="20" value={description}></textarea>
         </SectionStyle>
         <SectionStyle>
           <label>누구에게 보내실 건가요?: &nbsp;</label>

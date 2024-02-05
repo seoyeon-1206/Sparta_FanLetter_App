@@ -22,7 +22,7 @@ export const ButtonItem = styled.button`
   width: 200px;
   height: 100px;
   background: inherit ; 
-  border:none; 
+  border: 1px solid black;
   box-shadow:none; 
   border-radius:0; 
   padding:0; 
