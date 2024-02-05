@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { ButtonItem, ButtonList, CustomHeader, FanLetterItem, FanLetterList, FormStyle, FormSubmitButtonBox, NickNameDate, NickNameDescription, NickNameText, ProfileImage, SectionStyle } from '../style/HomeStyle';
+import { ButtonItem, ButtonList, CustomHeader, DesciptionTextArea, FanLetterItem, FanLetterList, FormStyle, FormSubmitButton, FormSubmitButtonBox, NickNameDate, NickNameDescription, NickNameInput, NickNameText, ProfileImage, SectionStyle } from '../style/HomeStyle';
 import { FanLetterContext } from '../context/FanLetterContext';
 
 export default function Home() {
@@ -18,10 +18,24 @@ export default function Home() {
       id: uuidv4(),
       nickName: nickName,
       description: description,
-      date: Date(),
+      date: formatDate(new Date()),
       category: newCategory
     })
   }
+
+  const formatDate = (date) => {
+    const year = date.getFullYear().toString().slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const seconds = ('0' + date.getSeconds()).slice(-2);
+
+    const period = hours < 12 ? '오전' : '오후';
+    const formattedHours = hours % 12 || 12;
+
+    return `${year}. ${month}. ${day}. ${period} ${formattedHours}:${minutes}:${seconds}`;
+  };
 
   const handleChangeCategory = newCategory => {
     setCurrentCategory(newCategory)
@@ -45,11 +59,11 @@ export default function Home() {
       <FormStyle>
         <SectionStyle>
           <label>닉네임: &nbsp;</label>
-          <input onChange={e => setNickName(e.currentTarget.value)} placeholder="최대 20글자까지 작성할 수 있습니다." maxlength="20" value={nickName}></input>
+          <NickNameInput onChange={e => setNickName(e.currentTarget.value)} placeholder="최대 20글자까지 작성할 수 있습니다." maxlength="20" value={nickName}></NickNameInput>
         </SectionStyle>
         <SectionStyle>
           <label>내용:&nbsp;</label>
-          <textarea onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={description}></textarea>
+          <DesciptionTextArea onChange={e => setDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={description}></DesciptionTextArea>
         </SectionStyle>
         <SectionStyle>
           <label>누구에게 보내실 건가요?: &nbsp;</label>
@@ -60,7 +74,7 @@ export default function Home() {
           </select>
         </SectionStyle>
         <FormSubmitButtonBox>
-          <button type="button" onClick={() => onAddNewLetter()}>팬레터 등록</button>
+          <FormSubmitButton type="button" onClick={() => onAddNewLetter()}>팬레터 등록</FormSubmitButton>
         </FormSubmitButtonBox>
       </FormStyle>
       <FanLetterList>
