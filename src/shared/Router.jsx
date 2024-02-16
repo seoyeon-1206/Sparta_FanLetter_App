@@ -5,57 +5,38 @@ import Home from 'pages/Home';
 import Detail from 'pages/Detail';
 
 const dummyFanLetters = [
-    {
-      id: uuidv4(),
-      nickName: "joy💓",
-      description: "Poyami love you",
-      date: Date(),
-      category: "Poyami"
-    },
-    {
-      id: uuidv4(),
-      nickName: "joy💓",
-      description: "Apple love you",
-      date: Date(),
-      category: "Apple"
-    },
-    {
-      id: uuidv4(),
-      nickName: "joy💓",
-      description: "Yeoul love you",
-      date: Date(),
-      category: "Yeoul"
-    },
-  ]
+  {
+    id: uuidv4(),
+    nickName: "joy💓",
+    description: "Poyami love you",
+    date: Date(),
+    category: "Poyami"
+  },
+  {
+    id: uuidv4(),
+    nickName: "joy💓",
+    description: "Apple love you",
+    date: Date(),
+    category: "Apple"
+  },
+  {
+    id: uuidv4(),
+    nickName: "joy💓",
+    description: "Yeoul love you",
+    date: Date(),
+    category: "Yeoul"
+  },
+]
 
 export default function Router() {
 
   const [fanLetters, setFanLetters] = useState(dummyFanLetters)
 
-  const handleAddNewLetter = item => {
-    setFanLetters([...fanLetters, item])
-  }
-  const handleUpdateLetter = updatedItem => {
-    const newLetterList =  fanLetters.map(item => {
-      if (item.id == updatedItem.id) {
-        return updatedItem
-      } else {
-        return item
-      }
-    })
-    setFanLetters(newLetterList)
-  }
-
-  const handleDeleteLetter = deletedId => {
-    const newLetters = fanLetters.filter(item => item.id != deletedId)
-    setFanLetters(newLetters)
-  }
-
-    return <BrowserRouter>
+  return <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home fanLetters={fanLetters} handleAddNewLetter={handleAddNewLetter}/>} />
-      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} handleDeleteLetter={handleDeleteLetter} handleUpdateLetters={handleUpdateLetter}/>}/>
+      <Route path="/" element={<Home fanLetters={fanLetters} setFanLetters={setFanLetters} />} />
+      <Route path="/detail/:id" element={<Detail fanLetters={fanLetters} setFanLetters={setFanLetters} />} />
       <Route path="*" element={<Navigate replace to="/" />} />
     </Routes>
-    </BrowserRouter>
+  </BrowserRouter>
 }

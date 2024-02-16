@@ -1,72 +1,98 @@
 import React, { useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { FanLetterItem, NickNameDate, NickNameDescription, NickNameText, ProfileImage } from '../style/HomeStyle';
-import { BottomButtonStyle, EditButtons, FanLetterDetail } from '../style/DetailStyle';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import Avatar from 'components/comon/Avatar';
+import Button from 'components/comon/Button';
 
-export default function Detail({ fanLetters, handleDeleteLetter, handleUpdateLetters }) {
-  const [isEdit, setIsEdit] = useState(false)
-  const [editedDescription, setEditedDescription] = useState("")
+export default function Detail({ fanLetters, setFanLetters }) {
   let navigate = useNavigate();
-  const param = useParams();
-  const letter = fanLetters.find((item) => item.id === param.id);
+  const { id } = useParams();
+  const { nickName, description, date, category } = fanLetters.find((item) => item.id === id); //구조분해할당
 
   const handleDelete = () => {
-    handleDeleteLetter(letter.id)
-    navigate('/')
-  }
-
-  const handleEditFinished = () => {
-    handleUpdateLetters({
-      id: letter.id,
-      nickName: letter.nickName,
-      description: editedDescription,
-      date: letter.date, 
-      category: letter.category
-    })
-    setIsEdit(false)
-    navigate('/')
+    const answer = window.confirm('정말로 삭제하시겠습니까?')
+    if (!answer) return;
+    const newLetters = fanLetters.filter(letter => letter.id !== id)
+    navigate('/');
+    setFanLetters(newLetters)
   }
 
   return (
     <>
-      <div>
-        {
-          isEdit ?
-            <>
-              <FanLetterDetail>
-                <ProfileImage/>
-                <div>
-                  <NickNameText>{letter.nickName}</NickNameText>
-                  <NickNameDate>{letter.date}</NickNameDate>
-                  <h3>{letter.category}에게</h3>
-                  <textarea onChange={e => setEditedDescription(e.currentTarget.value)} placeholder="최대 100자까지만 작성할 수 있습니다." maxlength="20" value={editedDescription}></textarea>
-                  <EditButtons>
-                    <BottomButtonStyle onClick={() => handleEditFinished()}>수정완료</BottomButtonStyle>
-                  </EditButtons>
-                </div>
-              </FanLetterDetail>
-            </>
-            :
-            <>
-              <FanLetterDetail>
-                <ProfileImage />
-                <div>
-                  <NickNameText>{letter.nickName}</NickNameText>
-                  <NickNameDate>{letter.date}</NickNameDate>
-                  <h3>{letter.category}에게</h3>
-                  <NickNameDescription>{letter.description}</NickNameDescription>
-                  <EditButtons>
-                    <BottomButtonStyle onClick={() => handleDelete()}>삭제</BottomButtonStyle>
-                    <BottomButtonStyle onClick={() => {
-                      setEditedDescription(letter.description)
-                      setIsEdit(true)
-                    }}>수정</BottomButtonStyle>
-                  </EditButtons>
-                </div>
-              </FanLetterDetail>
-            </>
-        }
-      </div>
+      <Container>
+        <Link to="/">
+          <HomeBtn>
+            <Button text="홈으로" />
+          </HomeBtn>
+        </Link>
+        <DetailWrapper>
+          <UserInfo>
+            <AvatarAndNickname>
+              <Avatar scr={null} />
+              <NickName>{nickName}</NickName>
+            </AvatarAndNickname>
+            <time>{date}</time>
+          </UserInfo>
+          <ToMember>
+            To: {category}
+          </ToMember>
+          <Content>{description}</Content>
+          <Button text="수정" ></Button>
+          <Button text="삭제" onClick={handleDelete}></Button>
+
+        </DetailWrapper>
+      </Container>
     </>
   )
 }
+
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`
+const HomeBtn = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+`
+const DetailWrapper = styled.section`
+  background-color: gray;
+  color: white;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 700px;
+  min-height: 400px;
+`
+
+const UserInfo = styled.div`
+  display: felx;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const AvatarAndNickname = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px
+`
+
+const NickName = styled.span`
+  font-size: 32px;
+`
+
+const ToMember = styled.span`
+  font-size: 24px;
+`
+
+const Content = styled.p`
+  font: 24px;
+  line-height: 30px;
+  padding: 12px;
+  background-color: black;
+  border-radius: 12px;
+`
