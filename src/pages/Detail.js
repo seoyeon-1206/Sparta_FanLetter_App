@@ -5,6 +5,8 @@ import Avatar from 'components/comon/Avatar';
 import Button from 'components/comon/Button';
 
 export default function Detail({ fanLetters, setFanLetters }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingText, setEditingText] = useState("");
   let navigate = useNavigate();
   const { id } = useParams();
   const { nickName, description, date, category } = fanLetters.find((item) => item.id === id); //구조분해할당
@@ -15,6 +17,19 @@ export default function Detail({ fanLetters, setFanLetters }) {
     const newLetters = fanLetters.filter(letter => letter.id !== id)
     navigate('/');
     setFanLetters(newLetters)
+  }
+  const handleEdit = () => {
+    if (!editingText) return alert('수정사항이 없습니다')
+    const newLetters = fanLetters.map((letter) => {
+      if (letter.id === id) {
+        return { ...letter, description: editingText }
+      } return letter;
+    })
+    setFanLetters(newLetters)
+    setIsEditing(false)
+    setEditingText("")
+
+
   }
 
   return (
@@ -36,9 +51,22 @@ export default function Detail({ fanLetters, setFanLetters }) {
           <ToMember>
             To: {category}
           </ToMember>
-          <Content>{description}</Content>
-          <Button text="수정" ></Button>
-          <Button text="삭제" onClick={handleDelete}></Button>
+          {isEditing ? <>
+            <Textarea autoFocus defaultValue={description} onChange={(e) => { setEditingText(e.target.value) }} />
+            <BtnsWrapper>
+              <Button text="취소" onClick={() => setIsEditing(false)}></Button>
+              <Button text="수정완료" onClick={handleEdit}></Button>
+            </BtnsWrapper>
+          </> :
+            <>
+              <Content>{description}</Content>
+              <BtnsWrapper>
+                <Button text="수정" onClick={() => setIsEditing(true)}></Button>
+                <Button text="삭제" onClick={handleDelete}></Button>
+              </BtnsWrapper>
+            </>}
+
+
 
         </DetailWrapper>
       </Container>
@@ -95,4 +123,18 @@ const Content = styled.p`
   padding: 12px;
   background-color: black;
   border-radius: 12px;
+`
+const BtnsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+`
+const Textarea = styled.textarea`
+  font: 24px;
+  line-height: 30px;
+  padding: 12px;
+  background-color: black;
+  border-radius: 12px;
+  resize: none;
+  color: white;
 `
